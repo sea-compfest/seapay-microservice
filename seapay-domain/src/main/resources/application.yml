@@ -1,0 +1,29 @@
+DB_HOST: localhost
+DB_PORT: 5432
+DB_NAME: sea_pay_dev
+DB_USERNAME: postgres
+DB_PASSWORD: foo
+DB_SOFTWARE: postgresql
+DB_DRIVER_CLASS: org.postgresql.Driver
+DB_POOL_SIZE: 50
+
+JDBI_LOG_LEVEL: DEBUG
+LOG_LEVEL: INFO
+
+PORT: 8080
+
+test:
+  DB_HOST: localhost
+  DB_PORT: 5432
+  DB_NAME: sea_pay_dev_test
+  DB_USERNAME: postgres
+  DB_PASSWORD: foo
+  DB_SOFTWARE: postgresql
+  DB_DRIVER_CLASS: org.postgresql.Driver
+  DB_POOL_SIZE: 50
+  USE_HIKARI_DB_POOL: false
+
+  JDBI_LOG_LEVEL: DEBUG
+  LOG_LEVEL: INFO
+
+  PORT: 8080

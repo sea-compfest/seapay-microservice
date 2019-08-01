@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "org.flywaydb.flyway" version "5.2.4"
 }
 
 group 'com.seapay.domain'
@@ -7,9 +8,29 @@ version '0.0.1'
 
 sourceCompatibility = 1.8
 
+flyway {
+    task migrateDb(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+        url = 'jdbc:postgresql://localhost:5432/sea_pay_dev'
+        user = 'postgres'
+        password = 'postgres'
+    }
+
+    task migrateTestDb(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+        url = 'jdbc:postgresql://localhost:5432/sea_pay_dev_test'
+        user = 'postgres'
+        password = 'postgres'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation project(':seapay-api')
     implementation project(':seapay-common')
+
+    compile 'org.postgresql:postgresql:42.2.5'
 
     testImplementation("org.mockito:mockito-core:2.+")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.0")
