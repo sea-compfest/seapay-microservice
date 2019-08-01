@@ -28,6 +28,9 @@ testdb-migrate:
 testdb-drop:
 	dropdb -p $(TEST_DB_PORT) --if-exists -Upostgres $(TEST_DB_NAME)
 
+run-monolith:
+	bash -c "set -a && source ./environtment.monolith.sample && set +a && java -jar ./seapay-monolith/build/libs/seapay-monolith-$(SEAPAY_VERSION)-all.jar"
+
 .PHONY: test
 test:
 	APP_ENVIRONMENT=TEST ./gradlew test

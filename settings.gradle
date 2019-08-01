@@ -2,4 +2,5 @@ rootProject.name = 'seapay'
 include 'seapay-common'
 include 'seapay-api'
 include 'seapay-domain'
+include 'seapay-monolith'
 
