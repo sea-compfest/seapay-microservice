@@ -31,6 +31,9 @@ testdb-drop:
 run-monolith:
 	bash -c "set -a && source ./environtment.monolith.sample && set +a && java -jar ./seapay-monolith/build/libs/seapay-monolith-$(SEAPAY_VERSION)-all.jar"
 
+run-transaction:
+	bash -c "set -a && source ./environtment.transaction.sample && set +a && java -jar ./seapay-transaction-service/build/libs/seapay-transaction-service-$(SEAPAY_VERSION)-all.jar"
+
 .PHONY: test
 test:
 	APP_ENVIRONMENT=TEST ./gradlew test
