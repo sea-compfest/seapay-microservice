@@ -1,0 +1,330 @@
+{
+  "info": {
+    "name": "sea-pay",
+    "_postman_id": "86ddce96-8cac-b270-05bf-44c6bd63df40",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "http://localhost:8080/v1/sea-pay/customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"seapay\",\n\t\"email\": \"email\",\n\t\"phonenumber\": \"phonenumber\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/sea-pay/customer",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "v1",
+            "sea-pay",
+            "customer"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/v1/sea-pay/merchant",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"seapay\",\n\t\"email\": \"email\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/sea-pay/merchant",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "v1",
+            "sea-pay",
+            "merchant"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/v1/sea-pay/topup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"user_id\": \"36e5bf5c-b148-49c3-a859-8473565d777c\",\n\t\"amount\": \"100\",\n\t\"reference_id\": \"BANK-ACB-NOTES-001\",\n\t\"description\": \"FROM BANK ACB\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/sea-pay/topup",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "v1",
+            "sea-pay",
+            "topup"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/v1/sea-pay/pay",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"user_id\": \"36e5bf5c-b148-49c3-a859-8473565d777c\",\n\t\"merchant_id\": \"36e5bf5c-b148-49c3-a859-8473565d777c\",\n\t\"amount\": \"100\",\n\t\"reference_id\": \"Kopi-Bukan-Kenangan\",\n\t\"description\": \"Bukan Kenangan Mantan\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/sea-pay/pay",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "v1",
+            "sea-pay",
+            "pay"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8082/v1/sea-pay/user-account",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"user_id\": \"f5493ffb-7d26-4b9c-9bb3-91bb35478ba3\",\n\t\"name\": \"seapay\",\n\t\"email\": \"email\",\n\t\"phonenumber\": \"phonenumber\",\n\t\"user_type\": 0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/v1/sea-pay/user-account",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "sea-pay",
+            "user-account"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8081/v1/sea-pay/transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"transaction_id\": \"f5493ffb-7d26-4b9c-9bb3-91bb35478ba3\",\n\t\"reference_id\": \"Bukan Kenangan Mantan\",\n\t\"credited_wallet\": \"f5493ffb-7d26-4b9c-9bb3-91bb35478ba3\",\n\t\"debited_wallet\": \"f5493ffb-7d26-4b9c-9bb3-91bb35478ba3\",\n\t\"description\": \"Kopi-Bukan-Kenangan\",\n\t\"transaction_date\": \"2019-08-01T10:16:09.027\",\n\t\"amount\": 100,\n\t\"transaction_type\": 0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/v1/sea-pay/transaction",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "v1",
+            "sea-pay",
+            "transaction"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8083/v1/sea-pay/wallet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"user_id\": \"b63e79fa-4853-4214-93bb-0b0a1b741f35\",\n\t\"wallet_id\": \"b63e79fa-4853-4214-93bb-0b0a1b741f35\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/v1/sea-pay/wallet",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "v1",
+            "sea-pay",
+            "wallet"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8083/v1/sea-pay/wallet/topup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"wallet_id\": \"b63e79fa-4853-4214-93bb-0b0a1b741f35\",\n\t\"amount\": 100\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/v1/sea-pay/wallet/topup",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "v1",
+            "sea-pay",
+            "wallet",
+            "topup"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8083/v1/sea-pay/wallet/transfer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"source_id\": \"b63e79fa-4853-4214-93bb-0b0a1b741f35\",\n\t\"target_id\": \"b\",\n\t\"amount\": 100\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/v1/sea-pay/wallet/transfer",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "v1",
+            "sea-pay",
+            "wallet",
+            "transfer"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8083/v1/sea-pay/wallet/get-wallet-by-user",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"source_id\": \"b63e79fa-4853-4214-93bb-0b0a1b741f35\",\n\t\"target_id\": \"b\",\n\t\"amount\": 100\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/v1/sea-pay/wallet/get-wallet-by-user?user-id=a",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "v1",
+            "sea-pay",
+            "wallet",
+            "get-wallet-by-user"
+          ],
+          "query": [
+            {
+              "key": "user-id",
+              "value": "a",
+              "equals": true
+            }
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    }
+  ]
+}

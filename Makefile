@@ -31,6 +31,9 @@ testdb-drop:
 run-monolith:
 	bash -c "set -a && source ./environtment.monolith.sample && set +a && java -jar ./seapay-monolith/build/libs/seapay-monolith-$(SEAPAY_VERSION)-all.jar"
 
+run-gateway:
+	bash -c "set -a && source ./environtment.gateway.sample && set +a && java -jar ./seapay-gateway-service/build/libs/seapay-gateway-service-$(SEAPAY_VERSION)-all.jar"
+
 run-user:
 	bash -c "set -a && source ./environtment.user.sample && set +a && java -jar ./seapay-user-service/build/libs/seapay-user-service-$(SEAPAY_VERSION)-all.jar"
 

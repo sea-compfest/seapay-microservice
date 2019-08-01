@@ -4,6 +4,7 @@ include 'seapay-api'
 include 'seapay-domain'
 include 'seapay-monolith'
 include 'seapay-user-service'
+include 'seapay-gateway-service'
 include 'seapay-wallet-service'
 include 'seapay-transaction-service'
 
