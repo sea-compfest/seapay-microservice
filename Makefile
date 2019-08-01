@@ -34,6 +34,9 @@ run-monolith:
 run-user:
 	bash -c "set -a && source ./environtment.user.sample && set +a && java -jar ./seapay-user-service/build/libs/seapay-user-service-$(SEAPAY_VERSION)-all.jar"
 
+run-wallet:
+	bash -c "set -a && source ./environtment.wallet.sample && set +a && java -jar ./seapay-wallet-service/build/libs/seapay-wallet-service-$(SEAPAY_VERSION)-all.jar"
+
 run-transaction:
 	bash -c "set -a && source ./environtment.transaction.sample && set +a && java -jar ./seapay-transaction-service/build/libs/seapay-transaction-service-$(SEAPAY_VERSION)-all.jar"
 
