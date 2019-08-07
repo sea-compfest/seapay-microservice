@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    env_file:
+      - ./db-staging.env
+    ports:
+      - "5432:5432"
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+  app:
+    env_file:
+      - ./monolith-staging.env
+    build: .
+    ports:
+      - "8080:8080"
+    working_dir: /opt/seapay
+    command: >
+      bash -c "
+      java -jar ./seapay-monolith/build/libs/seapay-monolith-*-all.jar"
+    volumes:
+      - .:/opt/seapay
+      - ~/.gradle:/root/.gradle
+    depends_on:
+      - db
+    restart: always

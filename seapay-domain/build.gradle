@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "org.flywaydb.flyway" version "5.2.4"
+    id 'jacoco'
 }
 
 group 'com.seapay.domain'
@@ -10,15 +11,9 @@ sourceCompatibility = 1.8
 
 flyway {
     task migrateDb(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
-        url = 'jdbc:postgresql://localhost:5432/sea_pay_dev'
-        user = 'postgres'
-        password = 'postgres'
-    }
-
-    task migrateTestDb(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
-        url = 'jdbc:postgresql://localhost:5432/sea_pay_dev_test'
-        user = 'postgres'
-        password = 'postgres'
+        url = System.getenv('DB_URL')
+        user = System.getenv('DB_USERNAME')
+        password = System.getenv('DB_PASSWORD')
     }
 }
 
@@ -35,4 +30,36 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.+")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.0")
+}
+
+//https://gist.github.com/tristanlins/9ac55dc7e6692b8c98dc0242724b12af#file-build-gradle
+jacocoTestReport {
+  reports {
+    xml.enabled true
+  }
+}
+
+task coverageReport() {
+  dependsOn jacocoTestReport
+
+  def reportFile = project.file("build/reports/jacoco/test/jacocoTestReport.xml")
+  inputs.file(reportFile)
+
+  doLast {
+    def slurper = new XmlSlurper()
+    slurper.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
+    slurper.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
+    def xml = slurper.parse(reportFile)
+    def counter = xml.counter.find {
+      node -> node.@type == 'INSTRUCTION'
+    }
+    def missed = counter.@missed.toDouble()
+    def covered = counter.@covered.toDouble()
+    def total = missed + covered
+    def percentage = covered / total * 100
+
+    printf "Missed %.0f loc%n", missed
+    printf "Covered %.0f loc%n", covered
+    printf "Total %.0f%%%n", percentage
+  }
 }

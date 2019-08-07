@@ -1,0 +1,47 @@
+image: openjdk:8
+
+stages:
+  - test
+  - build
+
+.initial_setup: &initial_setup
+  before_script:
+    - apt-get update
+    - apt-get install -y build-essential postgresql-client
+
+test:
+  stage: test
+  <<: *initial_setup
+  variables:
+    POSTGRES_HOST: postgres
+    POSTGRES_DB: sea_pay_ci
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: ""
+  services:
+    - postgres:latest
+  script:
+    - make test-ci
+
+build:
+  stage: build
+  <<: *initial_setup
+  variables:
+    POSTGRES_HOST: postgres
+    POSTGRES_DB: sea_pay_ci
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: ""
+    PACKAGE_DIR: pkg
+    PACKAGE_BIN: seapay-monolith
+  services:
+    - postgres:latest
+  script:
+    - bash -c "set -a && source ci.env && make db-migrate build"
+    - mkdir -p "./${PACKAGE_DIR}/db" && cp -r "./seapay-domain/src/main/resources/db/migration" "${PACKAGE_DIR}/db"
+    - mkdir "${PACKAGE_DIR}/flyway" && wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/5.2.4/flyway-commandline-5.2.4-linux-x64.tar.gz | tar xvz --strip 1 -C "${PACKAGE_DIR}/flyway"
+    - cp -r ./seapay-monolith/build/libs/*-all.jar "${PACKAGE_DIR}/${PACKAGE_BIN}.jar"
+    - cp -r ./migration.sh "${PACKAGE_DIR}"
+  artifacts:
+    name: "$CI_PROJECT_NAME-$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - "./${PACKAGE_DIR}"
+    expire_in: 2 week
