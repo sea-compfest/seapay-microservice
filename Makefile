@@ -1,32 +1,18 @@
+SHELL=/bin/bash
 SEAPAY_VERSION=0.0.1
-DB_NAME="sea_pay_dev"
-TEST_DB_NAME="sea_pay_dev_test"
-DB_PORT=5432
-TEST_DB_PORT=5432
 
-all: clean db-setup testdb-setup build test
+all: clean db-setup build test
 
 db-setup: db-create db-migrate
 
 db-drop:
-	dropdb -p $(DB_PORT) --if-exists -Upostgres $(DB_NAME)
+	dropdb -h ${DB_HOST} -p ${DB_PORT} --if-exists -Upostgres ${DB_NAME}
 
-db-create:
-	createdb -p $(DB_PORT) -Opostgres -Eutf8 $(DB_NAME)
+db-create: db-drop
+	createdb -h ${DB_HOST} -p ${DB_PORT} -Upostgres -Eutf8 ${DB_NAME}
 
 db-migrate:
 	./gradlew migrateDb
-
-testdb-setup: testdb-create testdb-migrate
-
-testdb-create: testdb-drop
-	createdb  -p $(TEST_DB_PORT) -Opostgres -Eutf8 $(TEST_DB_NAME)
-
-testdb-migrate:
-	APP_ENVIRONMENT=test ./gradlew migrateTestDb
-
-testdb-drop:
-	dropdb -p $(TEST_DB_PORT) --if-exists -Upostgres $(TEST_DB_NAME)
 
 run-monolith:
 	bash -c "set -a && source ./environtment.monolith.sample && set +a && java -jar ./seapay-monolith/build/libs/seapay-monolith-$(SEAPAY_VERSION)-all.jar"
@@ -45,7 +31,10 @@ run-transaction:
 
 .PHONY: test
 test:
-	APP_ENVIRONMENT=TEST ./gradlew test
+	./gradlew test check jacocoTestReport coverageReport
+
+test-ci:
+	bash -c "set -a && source ci.env && make db-migrate build && ./gradlew test check jacocoTestReport coverageReport"
 
 build:
 	./gradlew build

@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  db:
+    env_file:
+      - ./db-staging.env
+    ports:
+      - "5432:5432"
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+  gateway:
+    env_file:
+      - ./microservices-staging.env
+    build: .
+    ports:
+      - "8080:8080"
+    working_dir: /opt/seapay
+    command: >
+      bash -c "
+      java -jar ./seapay-gateway-service/build/libs/seapay-gateway-service-*-all.jar"
+    volumes:
+      - .:/opt/seapay
+      - ~/.gradle:/root/.gradle
+    depends_on:
+      - db
+    restart: always
+  transaction:
+    env_file:
+      - ./microservices-staging.env
+    build: .
+    ports:
+      - "8081:8080"
+    working_dir: /opt/seapay
+    command: >
+      bash -c "
+      java -jar ./seapay-transaction-service/build/libs/seapay-transaction-service-*-all.jar"
+    volumes:
+      - .:/opt/seapay
+      - ~/.gradle:/root/.gradle
+    depends_on:
+      - db
+    restart: always
+  user:
+    env_file:
+      - ./microservices-staging.env
+    build: .
+    ports:
+      - "8082:8080"
+    working_dir: /opt/seapay
+    command: >
+      bash -c "
+      java -jar ./seapay-user-service/build/libs/seapay-user-service-*-all.jar"
+    volumes:
+      - .:/opt/seapay
+      - ~/.gradle:/root/.gradle
+    depends_on:
+      - db
+    restart: always
+  wallet:
+    env_file:
+      - ./microservices-staging.env
+    build: .
+    ports:
+      - "8083:8080"
+    working_dir: /opt/seapay
+    command: >
+      bash -c "
+      java -jar ./seapay-wallet-service/build/libs/seapay-wallet-service-*-all.jar"
+    volumes:
+      - .:/opt/seapay
+      - ~/.gradle:/root/.gradle
+    depends_on:
+      - db
+    restart: always
